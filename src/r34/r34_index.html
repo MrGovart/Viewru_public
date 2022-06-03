@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/r34_script.js"></script>
+</head>
+<body>
+    <div class="main-container">
+    <form action="" method="get">
+    <div class="btn-container">
+        <div class="autocomplete">
+        <input id="search" type="text" class="form-control" autocomplete="off" placeholder="tags separated with space" name="tags">
+        </div>
+        <script>
+            var searchListener = document.getElementById('search')
+            var tag_delay_timer;
+            searchListener.addEventListener('input', function() {
+                clearTimeout(tag_delay_timer);
+                tag_delay_timer = setTimeout(function() {
+                    giveHint();
+                }, 800);
+            });
+        </script>
+    </div>
+        <div class="btn-container" >
+            <input type="button" id="search-btn" class="btn btn-main" value="Search">
+            <script>
+                var searchBtnListener = document.getElementById('search-btn');
+                searchBtnListener.addEventListener('click', readSearch);
+            </script>
+            <input type="submit"  class="btn btn-main" value="Gen URL">
+        </div>
+    <div class="form-container">
+        <div class="form">
+            <label>Sorting type</label>
+                <select id="sorting" name="sort_type">
+                    <option value=""></option>
+                    <option value="id">id</option>
+                    <option value="score">score</option>
+                    <option value="rating">rating</option>
+                    <option value="user">user</option>
+                    <option value="height">height</option>
+                    <option value="width">width</option>
+                    <option value="parent">parent</option>
+                    <option value="source">source</option>
+                    <option value="updated">updated</option>
+                </select>
+                <select id="order" name="order">
+                    <option value="desc">Desc</option>
+                    <option value="asc">Asc</option>
+                </select>
+        </div>
+        <div class="form">
+            <label>Rating</label>
+                <select id="rating" name="rating">
+                    <option value=""></option>
+                    <option value="explicit">Explicit</option>
+                    <option value="questionable">Questionable</option>
+                    <option value="safe">Safe</option>
+                </select>
+        </div>
+        <div class="form">
+            <input id="score" type="text" placeholder="Score more than" name="score" autocomplete="off"></input>
+        </div>
+    </div>
+    </form>
+    <div class="antijump">
+    </div>
+    <div id="scroller" style="overflow-y: scroll; height:800px;">
+        <script>
+            var scrollListener = document.getElementById('scroller')
+            var post_delay_timer;
+            scrollListener.addEventListener('scroll', function() {
+                clearTimeout(post_delay_timer);
+                post_delay_timer = setTimeout(function() {
+                    updateThumbs();
+                }, 500);
+            });
+        </script>
+        <div class="modal" id="modal"></div>
+        <div class="container-c" id="container">
+            <div class="container-f" id="container-1">
+            </div>
+        </div>
+        <script>
+            var hrefListener = document.getElementById('container')
+            hrefListener.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (e.target.offsetParent.id != 'container' || e.target.id == 'container-1' || e.target.id == 'container-1') {
+                    return;
+                }
+                var modal = document.getElementById('modal');
+                var link = e.target.closest('.img-c');
+                var meta = link.querySelector('.i-info');
+                var width = meta.getAttribute('width');
+                var height = meta.getAttribute('height');
+                link = link.firstElementChild.href;
+                var type = link.substr(link.lastIndexOf('.') + 1);
+                switch (type) {
+                    case ('jpeg'):
+                    case ('png'):
+                    case ('gif'):
+                    case ('jpg'):
+                        var wrapper = document.createElement('div');
+                            wrapper.setAttribute('class', 'img-wrap');
+                        var a = document.createElement('a');
+                            a.href = meta.getAttribute('file');
+                            a.innerHTML = 'fulres';
+                            a.target = '_blank';
+                            a.setAttribute('class', 'fulres');
+                        var image = new Image(width, height);
+                            image.setAttribute('class', 'modal-content')
+                            image.src = link;
+
+                        //var resizeControl = new ResizeObserver(responsiveImgCtrl)
+                        //resizeControl.observe(image);
+
+                        wrapper.appendChild(image);
+                        wrapper.appendChild(a);
+                        modal.appendChild(wrapper);
+                        modal.style.display = 'flex';
+                        if (wrapper.offsetHeight > height && width > height) {
+                            wrapper.style.maxWidth = width + 'px';
+                            } else {
+                            wrapper.style.maxWidth = (wrapper.offsetHeight / height) * width + 'px';
+                        }
+                        break;
+                    case ('mp4'):
+                    case ('webm'):
+                        var wrapper = document.createElement('div');
+                            wrapper.setAttribute('class', 'img-wrap');
+                        var video = document.createElement('video');
+                            video.controls = true;
+                            video.height = height;
+                            video.width = width;
+                            video.setAttribute('class', 'modal-content')
+                        var source = document.createElement('source');
+                            source.type = 'video/' + type;
+                            source.src = link;
+
+                        video.appendChild(source);
+                        wrapper.appendChild(video);
+                        modal.appendChild(wrapper);
+                        modal.style.display = 'flex';
+                        if (wrapper.offsetHeight > height && width > height) {
+                            wrapper.style.maxWidth = (width / (wrapper.offsetHeight / height)) + 'px';
+                            } else {
+                            wrapper.style.maxWidth = (wrapper.offsetHeight / height) * width + 'px';
+                        }
+                        break;
+                    default:
+                        console.log('Unsupported format???');
+                        break;
+                }                    
+            })
+            window.onclick = function(event) {
+            var modal = document.getElementById('modal');
+            if (event.target == modal || event.target.parentElement == modal) {
+                modal.style.display = "none";
+                modal.replaceChildren();
+              }
+            }
+        </script>
+        <script>
+            var window_resize_delay;
+            window.addEventListener('resize', function() {
+                clearTimeout(window_resize_delay);
+                window_resize_delay = setTimeout(changeLayout, 250)
+            })
+        </script>
+    </div>
+    </div>
+</body>
+</html>

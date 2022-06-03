@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="no-referrer">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/reddit_script.js"></script>
+    <link href="//vjs.zencdn.net/7.10.2/video-js.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+    <form action="" method="get">
+    <div class="btn-container">
+        <div class="autocomplete">
+        <input id="search" type="text" class="form-control" autocomplete="off" placeholder="tags separated with space" name="tags">
+        </div>
+    </div>
+        <div class="btn-container" >
+            <input type="button" id="search-btn" class="btn btn-main" value="Search">
+            <script>
+                var searchBtnListener = document.getElementById('search-btn');
+                searchBtnListener.addEventListener('click', readSearch);
+            </script>
+        </div>
+    </form>
+    <div id="scroller" style="overflow-y: scroll; height:800px;">
+        <div class="modal" id="modal"></div>
+        <div class="container-c" id="container">
+            <div class="container-f" id="container-1">
+            </div>
+        </div>
+        <script>
+            var hrefListener = document.getElementById('container')
+            hrefListener.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (e.target.offsetParent.id != 'container' || e.target.id == 'container-1' || e.target.id == 'container-1') {
+                    return;
+                }
+                var modal = document.getElementById('modal');
+                var link = e.target.closest('.img-c');
+                var meta = link.querySelector('.i-info');
+                var width = meta.getAttribute('width');
+                var height = meta.getAttribute('height');
+                link = link.firstElementChild.href;
+                var type = link.substr(link.lastIndexOf('.') + 1);
+                switch (type) {
+                    case ('jpeg'):
+                    case ('png'):
+                    case ('gif'):
+                    case ('jpg'):
+                        var wrapper = document.createElement('div');
+                            wrapper.setAttribute('class', 'img-wrap');
+                        var a = document.createElement('a');
+                            a.href = meta.getAttribute('file');
+                            a.innerHTML = 'fulres';
+                            a.target = '_blank';
+                            a.setAttribute('class', 'fulres');
+                        var image = new Image(width, height);
+                            image.setAttribute('class', 'modal-content')
+                            image.src = link;
+
+                        //var resizeControl = new ResizeObserver(responsiveImgCtrl)
+                        //resizeControl.observe(image);
+
+                        wrapper.appendChild(image);
+                        wrapper.appendChild(a);
+                        modal.appendChild(wrapper);
+                        modal.style.display = 'flex';
+                        if (wrapper.offsetHeight > height && width > height) {
+                            wrapper.style.maxWidth = width + 'px';
+                            } else {
+                            wrapper.style.maxWidth = (wrapper.offsetHeight / height) * width + 'px';
+                        }
+                        break;
+                    case ('mp4'):
+                    case ('webm'):
+                        var wrapper = document.createElement('div');
+                            wrapper.setAttribute('class', 'img-wrap');
+                        var video = document.createElement('video');
+                            video.controls = true;
+                            video.height = height;
+                            video.width = width;
+                            video.setAttribute('class', 'modal-content')
+                        var source = document.createElement('source');
+                            source.type = 'video/' + type;
+                            source.src = link;
+
+                        video.appendChild(source);
+                        wrapper.appendChild(video);
+                        modal.appendChild(wrapper);
+                        modal.style.display = 'flex';
+                        if (wrapper.offsetHeight > height && width > height) {
+                            wrapper.style.maxWidth = (width / (wrapper.offsetHeight / height)) + 'px';
+                            } else {
+                            wrapper.style.maxWidth = (wrapper.offsetHeight / height) * width + 'px';
+                        }
+                        break;
+                    default:
+                        console.log('Unsupported format???');
+                        break;
+                }                    
+            })
+            window.onclick = function(event) {
+            var modal = document.getElementById('modal');
+            if (event.target == modal || event.target.parentElement == modal) {
+                modal.style.display = "none";
+                modal.replaceChildren();
+              }
+            }
+        </script>
+    </div>
+    </div>
+    <script>
+        var window_resize_delay;
+        window.addEventListener('resize', function() {
+            clearTimeout(window_resize_delay);
+            window_resize_delay = setTimeout(changeLayout, 250)
+        })
+    </script>
+    <script src="http://cdn.dashjs.org/v3.1.0/dash.all.min.js"></script>
+    <script src="//vjs.zencdn.net/7.10.2/video.min.js"></script>
+</body>
+</html>

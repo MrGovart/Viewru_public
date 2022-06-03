@@ -1,0 +1,233 @@
+  @media only screen and (max-width: 1080px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+      width: 100%;
+      float:unset;
+    }
+  }
+@media (min-width: 768px) {
+  .container-f {
+    width: 750px;
+  }
+}
+@media (max-width: 690px) {
+  .form-container {
+    flex-direction: column;
+  }
+  .antijump {
+    max-height: 0px;
+  }
+}
+
+  @font-face {
+    font-family: main-font;
+    src: url(fonts/Raleway-Regular.ttf);
+  }
+
+  a:link {
+    color: #000000
+  }
+  input {
+    padding-left: 12px;
+    border: 1px;
+    border-style: solid;
+    border-color: rgb(118, 118, 118);
+    font-family: main-font;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 30px;
+    box-sizing: border-box;
+  }
+  select {
+    color: #3f3f3f;
+    font-family: main-font;
+    font-size: 14px;
+    border-radius: 4px;
+    height: 30px;
+  }
+  body {
+    background-color: #01010c;
+    font-family: main-font;
+    font-size: 14px;
+  }
+
+  label {
+    margin: 0px 5px;
+    color: #e3e3e3;
+  }
+
+  .antijump {
+    height: 80px;
+  }
+  .autocomplete {
+    /*the container must be positioned relative:*/
+    position: relative;
+    display: block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 100%;
+  }
+  .autocomplete-items {
+    position: absolute;
+    border: 1px solid #c7c7c7;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+    border-radius: 0px 0px 4px 4px;
+  }
+  .autocomplete-items div {
+    background-color: #efefef;
+    padding: 3px 0px 3px 6px;
+  }
+  .autocomplete-items div:hover {
+    background-color: #c7c7c7;
+  }
+  .btn {
+    border: 1px solid #000000;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: 6px 12px;
+    touch-action: manipulation;
+    border-radius: 4px;
+  }
+  .btn-main {
+    color: #e3e3e3;
+    background-color: #430096;
+  }
+  .btn-main:hover {
+    background-color: #5f00d3;
+  }
+  .btn-main:active {
+    background-color: #5600be;
+  }
+  .btn-side {
+    background-color: #29005a;
+  }
+  .btn-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .form-container {
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .form {
+    margin: 5px 10px 5px 10px;
+  }
+  .form-control {
+    width: 100%;
+  }
+  label > * {
+    font-weight: initial;
+  }
+  .container-c {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: #030007;
+  }
+  .container-f {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    width: 300px;
+    margin-top:5px;
+    margin-left:5px;
+  }
+  img {
+    object-fit: contain;
+    height: auto;
+  }
+  .img-c {
+    margin-bottom:3px;
+  }
+  .thumb {
+    width: 300px;
+  }
+  
+  .main-container {
+    padding: 10px 20px;
+  }
+  .modal {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    box-sizing: border-box;
+  }
+  .modal-content {
+    background-color: #fefefe;
+    padding: 10px;
+    border-radius: 6px 6px 0 0;
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+  }
+  .img-wrap {
+    height: 95%;
+    width: 95%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    box-sizing: border-box;
+  }
+  .fulres {
+    background-color: #fefefe;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+    text-align: center;
+  }
+  .loading {
+    position: absolute;
+    height: 50px;
+    z-index: 2;
+  }
+  .loading-c {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .i-info {
+    display: none;
+  }
+
+  .video-js {
+    width: 300px;
+    height: auto;
+  }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #303030; 
+}
+ 
+::-webkit-scrollbar-thumb {
+  background: rgb(32, 32, 32); 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(44, 44, 44); 
+}
